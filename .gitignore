@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+*.csv
+DataFiles/FoodData_Central_csv_2024-04-18/Download API Field Descriptions.xlsx
