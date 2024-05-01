@@ -118,7 +118,7 @@ CREATE SCHEMA USDA AUTHORIZATION dbo;
 GO
 
 CREATE TABLE USDA.acquisition_samples (
-    fdc_id_of_sample_food INT CONSTRAINT PK_acquisition_samples PRIMARY KEY,
+    fdc_id_of_sample_food INT,-- CONSTRAINT PK_acquisition_samples PRIMARY KEY,
     fdc_id_of_acquisition_food INT
 );
 -- Add description to the acquisition_samples table
@@ -209,17 +209,17 @@ CREATE TABLE USDA.branded_food (
     gtin_upc VARCHAR(20),
     ingredients VARCHAR(MAX),
     not_a_significant_source_of VARCHAR(255),
-    serving_size INT,
+    serving_size VARCHAR(25),
     serving_size_unit VARCHAR(50),
     household_serving_fulltext VARCHAR(255),
     branded_food_category VARCHAR(255),
     data_source VARCHAR(255),
-    package_weight INT,
+    package_weight VARCHAR(255),
     modified_date DATE,
     available_date DATE,
     market_country VARCHAR(255),
     discontinued_date DATE,
-    preparation_state_code VARCHAR(10),
+    preparation_state_code VARCHAR(25),
     trade_channel VARCHAR(255),
     short_description VARCHAR(255)
 );
@@ -392,7 +392,7 @@ EXEC sys.sp_addextendedproperty
 
 
 CREATE TABLE USDA.fndds_derivation (
-    SR_28_derivation_code VARCHAR(2) CONSTRAINT PK_fndds_derivation PRIMARY KEY,
+    SR_28_derivation_code VARCHAR(10) CONSTRAINT PK_fndds_derivation PRIMARY KEY,
     SR_28_derivation_description VARCHAR(255)
 );
 
@@ -421,7 +421,7 @@ EXEC sys.sp_addextendedproperty
 
 
 CREATE TABLE USDA.fndds_ingredient_nutrient_value (
-    ingredient_code VARCHAR(10) CONSTRAINT PK_fndds_ingredient_nutrient_value PRIMARY KEY,
+    ingredient_code VARCHAR(10),-- CONSTRAINT PK_fndds_ingredient_nutrient_value PRIMARY KEY,
     ingredient_description VARCHAR(255),
     nutrient_code INT,
     nutrient_value DECIMAL(18, 2),
@@ -430,7 +430,7 @@ CREATE TABLE USDA.fndds_ingredient_nutrient_value (
     derivation_code VARCHAR(10),
     SR_AddMod_year INT,
     Foundation_year_acquired INT,
-    Start_date DATE,
+    Start_date VARCHAR(25),
     End_date DATE
 );
 
@@ -860,16 +860,16 @@ CREATE TABLE USDA.food_nutrient (
     id INT CONSTRAINT PK_food_nutrient PRIMARY KEY,
     fdc_id INT,
     nutrient_id INT,
-    amount DECIMAL(18, 2),
+    amount VARCHAR(25),
     data_points INT,
     derivation_id INT,
     min DECIMAL(18, 2),
-    max DECIMAL(18, 2),
-    median DECIMAL(18, 2),
+    max VARCHAR(25),
+    median VARCHAR(25),
     loq DECIMAL(18, 2),
     footnote VARCHAR(255),
     min_year_acquired INT,
-    percent_daily_value INT
+    percent_daily_value DECIMAL(18, 2)
 );
 
 -- Add description to the food_nutrient table
@@ -1015,7 +1015,7 @@ EXEC sys.sp_addextendedproperty
 
 CREATE TABLE USDA.food_nutrient_derivation (
     id INT CONSTRAINT PK_food_nutrient_derivation PRIMARY KEY,
-    code VARCHAR(2),
+    code VARCHAR(10),
     description VARCHAR(255)
 );
 
@@ -1227,7 +1227,7 @@ EXEC sys.sp_addextendedproperty
 
 CREATE TABLE USDA.food_update_log_entry (
     id INT CONSTRAINT PK_food_update_log_entry PRIMARY KEY,
-    description VARCHAR(255),
+    description VARCHAR(500),
     last_updated DATE
 );
 
@@ -1405,7 +1405,7 @@ EXEC sys.sp_addextendedproperty
 CREATE TABLE USDA.lab_method (
     id INT CONSTRAINT PK_lab_method PRIMARY KEY,
     description VARCHAR(255),
-    technique VARCHAR(50)
+    technique VARCHAR(100)
 );
 
 -- Add description to the lab_method table
@@ -1441,7 +1441,7 @@ EXEC sys.sp_addextendedproperty
 
 CREATE TABLE USDA.lab_method_code (
     lab_method_id INT,
-    code VARCHAR(20)
+    code VARCHAR(100)
 );
 
 -- Add description to the lab_method_code table
@@ -1499,10 +1499,10 @@ CREATE TABLE USDA.market_acquisition (
     fdc_id INT CONSTRAINT PK_market_acquisition PRIMARY KEY,
     brand_description VARCHAR(255),
     expiration_date DATE,
-    label_weight DECIMAL(18, 9),
+    label_weight VARCHAR(50),
     location VARCHAR(255),
     acquisition_date DATE,
-    sales_type VARCHAR(10),
+    sales_type VARCHAR(100),
     sample_lot_nbr VARCHAR(50),
     sell_by_date DATE,
     store_city VARCHAR(255),
@@ -1939,7 +1939,7 @@ EXEC sys.sp_addextendedproperty
 
 CREATE TABLE USDA.sub_sample_result (
     food_nutrient_id INT CONSTRAINT PK_sub_sample_result PRIMARY KEY,
-    adjusted_amount DECIMAL(18, 2),
+    adjusted_amount VARCHAR(25),
     lab_method_id INT,
     nutrient_name VARCHAR(255)
 );
