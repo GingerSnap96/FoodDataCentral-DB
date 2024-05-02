@@ -1,7 +1,5 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Text;
 
 namespace FileToDatabase
@@ -10,11 +8,11 @@ namespace FileToDatabase
     {
         static void Main(string[] args)
         {
-            string directoryPath = @"C:\GitHubDev\TechnovitySolutions\FoodDataCentral-DB\DataFiles\Trouble Files";
+            string directoryPath = @"C:\GitHubDev\TechnovitySolutions\FoodDataCentral-DB\DataFiles\FoodData_Central_csv_2024-04-18";
             string connectionString = @"";
 
             // Get all file names in the directory
-            string[] files = Directory.GetFiles(directoryPath);
+            string[] files = Directory.GetFiles(directoryPath, "*.csv");
 
             foreach (string file in files)
             {

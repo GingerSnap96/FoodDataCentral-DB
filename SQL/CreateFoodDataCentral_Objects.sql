@@ -14,6 +14,7 @@ END
 
 
 CREATE DATABASE FoodDataCentral
+ --ON PRIMARY (NAME = N'FoodDataCentral',SIZE = 2097152KB, FILEGROWTH = 65536KB)
 GO
 
 USE FoodDataCentral;
@@ -208,18 +209,18 @@ CREATE TABLE USDA.branded_food (
     subbrand_name VARCHAR(255),
     gtin_upc VARCHAR(20),
     ingredients VARCHAR(MAX),
-    not_a_significant_source_of VARCHAR(255),
+    not_a_significant_source_of VARCHAR(2000),
     serving_size VARCHAR(25),
     serving_size_unit VARCHAR(50),
     household_serving_fulltext VARCHAR(255),
-    branded_food_category VARCHAR(255),
+    branded_food_category VARCHAR(1000),
     data_source VARCHAR(255),
     package_weight VARCHAR(255),
     modified_date DATE,
     available_date DATE,
     market_country VARCHAR(255),
     discontinued_date DATE,
-    preparation_state_code VARCHAR(25),
+    preparation_state_code VARCHAR(255),
     trade_channel VARCHAR(255),
     short_description VARCHAR(255)
 );
@@ -533,7 +534,7 @@ EXEC sys.sp_addextendedproperty
 CREATE TABLE USDA.food (
     fdc_id INT CONSTRAINT PK_food PRIMARY KEY,
     data_type VARCHAR(50),
-    description VARCHAR(255),
+    description VARCHAR(MAX),
     food_category_id INT,
     publication_date DATE
 );
@@ -778,9 +779,9 @@ CREATE TABLE USDA.food_component (
     id INT CONSTRAINT PK_food_component PRIMARY KEY,
     fdc_id INT,
     name VARCHAR(255),
-    pct_weight DECIMAL(5, 2),
+    pct_weight DECIMAL(18, 2),
     is_refuse VARCHAR(1),
-    gram_weight DECIMAL(5, 2),
+    gram_weight DECIMAL(18, 2),
     data_points INT,
     min_year_acquired INT
 );
@@ -1016,7 +1017,7 @@ EXEC sys.sp_addextendedproperty
 CREATE TABLE USDA.food_nutrient_derivation (
     id INT CONSTRAINT PK_food_nutrient_derivation PRIMARY KEY,
     code VARCHAR(10),
-    description VARCHAR(255)
+    description VARCHAR(MAX)
 );
 
 -- Add description to the food_nutrient_derivation table
@@ -1227,7 +1228,7 @@ EXEC sys.sp_addextendedproperty
 
 CREATE TABLE USDA.food_update_log_entry (
     id INT CONSTRAINT PK_food_update_log_entry PRIMARY KEY,
-    description VARCHAR(500),
+    description VARCHAR(MAX),
     last_updated DATE
 );
 
@@ -1507,7 +1508,7 @@ CREATE TABLE USDA.market_acquisition (
     sell_by_date DATE,
     store_city VARCHAR(255),
     store_name VARCHAR(255),
-    store_state VARCHAR(10),
+    store_state VARCHAR(255),
     upc_code VARCHAR(50)
 );
 
@@ -1727,8 +1728,8 @@ CREATE TABLE USDA.nutrient (
     id INT CONSTRAINT PK_nutrient PRIMARY KEY,
     name VARCHAR(255),
     unit_name VARCHAR(255),
-    nutrient_nbr INT,
-    rank INT
+    nutrient_nbr DECIMAL(18,2),
+    rank DECIMAL(18,2)
 );
 
 -- Add description to nutrient table
